@@ -1,0 +1,24 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: Employee-Service
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/api/employees/**
+        - id: Leave-Service
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/apii/employees/leaves/**,/api/employees/leaves/details/**,/**
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZONE: http://localhost:8761/eureka
